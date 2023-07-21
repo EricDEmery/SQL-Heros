@@ -1,5 +1,6 @@
 from database.db_connection import execute_query
 
+
 def menu():
     function_dict = {
         "create_hero": create_hero,
@@ -14,25 +15,34 @@ def menu():
         "3 = Update an existing hero \n"
         "4 = Remove a hero \n"
     )
-    user_choice = int(prompt) - 1
+    user_choice = (
+        int(prompt) - 1
+    )  # Dictionary keys are indexed from 0 to 3, but the user's input is indexed from 1 to 4.
 
     print(user_choice)
 
-    if 0 <= user_choice <= 3:       # Defensive programming. making sure user choice is index of function dictionary (1-4)
-        crud_functions = ["create_hero", "show_hero", "update_hero", "remove_hero"] #Setting a list to refer to to dictionary for menu options
-        function_caller = function_dict[crud_functions[user_choice]]    #Setting variable to function dict index. refers to index of dict by index of functions list
-        function_caller()       # Calls function by function dictionary value
+    if (
+        0 <= user_choice <= 3
+    ):  # Defensive programming. making sure user choice is index of function dictionary (1-4)
+        crud_functions = [
+            "create_hero",
+            "show_hero",
+            "update_hero",
+            "remove_hero",
+        ]  # Setting a list to refer to to dictionary for menu options
+        function_caller = function_dict[
+            crud_functions[user_choice]
+        ]  # Setting variable to function dict index. refers to index of dict by index of functions list
+        function_caller()  # Calls function by function dictionary value
     else:
         print("Choose a correct option dawg")
         menu()
 
 
-
-
 # Function to create a Hero in the DB
 
-def create_hero():
 
+def create_hero():
     name = input("Name your Hero ")
     about_me = input("Tell us about your Hero ")
     biography = input("Tell us your Heroes story ")
@@ -44,7 +54,7 @@ def create_hero():
     """
 
     execute_query(query, (name, about_me, biography))
-    
+
     print(f"Succsessfuly Created Hero {name}!")
 
     menu()
@@ -52,8 +62,8 @@ def create_hero():
 
 # Function to Remove a Hero from the Database
 
-def remove_hero():
 
+def remove_hero():
     delete_name = input("Who would you like to remove? ")
     query = """
 
@@ -68,27 +78,35 @@ def remove_hero():
 
     menu()
 
+
 # Function to show the Heros
 
+
 def show_hero():
+    query = """ 
 
-    query = """
-
-    SELECT * FROM heroes
+    SELECT * FROM heroes;
 
     """
 
-    hero_list = execute_query(query).fetchall() # Fetches the entire Heroes Table and saving it to a variable
+    hero_list = execute_query(
+        query
+    ).fetchall()  # Fetches the entire Heroes Table and saving it to a variable
 
-    for hero in hero_list: # looping through the variable Printing the first index of each array which is the heros name
+    for (
+        hero
+    ) in (
+        hero_list
+    ):  # looping through the variable Printing the first index of each array which is the heros name
         print(hero[1])
 
     menu()
 
+
 # Function to update a Hero
 
-def update_hero():
 
+def update_hero():
     select_hero = input("Who Would You Like To Update? ")
     update_name = input("Update Hero name ")
     update_about_me = input("Change Hero info ")
@@ -111,4 +129,6 @@ def update_hero():
 
     menu()
 
-menu()
+
+menu()  # menu is called multiple times throughout the code to display main options, take users imput, show
+# the data, call the function, and then show them the menu again
