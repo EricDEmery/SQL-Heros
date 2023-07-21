@@ -8,7 +8,8 @@
 
 ### Must Have ###
 
--CRUD operations to add, delete, update, and views items in the database
+- Connection to the database
+- CRUD operations to add, delete, update, and views items in the database
 
 ## Functional ##
 
